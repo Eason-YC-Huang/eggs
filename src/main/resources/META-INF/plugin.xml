@@ -1,0 +1,26 @@
+<idea-plugin>
+    <id>com.hyc.plugin.egg</id>
+    <name>Eggs</name>
+    <vendor email="hunag_yicheng@foxmail.com" url="https://github.com/huangdaren1997">hyc</vendor>
+
+    <description><![CDATA[
+    Eggs is an IDEA plugin allows you to ....
+    ]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="com.hyc.plugin.action.RunCodeAction"
+                class="com.hyc.plugin.action.RunCodeAction"
+                text="RunCode" description="RunCode">
+            <add-to-group group-id="GenerateGroup" anchor="first"/>
+        </action>
+    </actions>
+</idea-plugin>
