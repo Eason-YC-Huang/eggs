@@ -11,16 +11,21 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
 
+    <application-components>
+        <component>
+            <implementation-class>com.hyc.plugin.core.CodeTemplateRepository</implementation-class>
+        </component>
+    </application-components>
+
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <applicationService serviceImplementation="com.hyc.plugin.core.CodeTemplateRepository"/>
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
-        <action id="com.hyc.plugin.action.RunCodeAction"
-                class="com.hyc.plugin.action.RunCodeAction"
-                text="RunCode" description="RunCode">
-            <add-to-group group-id="GenerateGroup" anchor="first"/>
-        </action>
+        <group id="com.hyc.plugin.action.RunCodeActionGroup"
+               class="com.hyc.plugin.action.RunCodeActionGroup"
+               text="RunCode" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </group>
     </actions>
 </idea-plugin>
