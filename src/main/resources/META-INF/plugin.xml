@@ -1,26 +1,31 @@
 <idea-plugin>
-    <id>com.hyc.plugin.egg</id>
+    <id>com.github.hexffff0.plugin.egg</id>
     <name>Eggs</name>
-    <vendor email="hunag_yicheng@foxmail.com" url="https://github.com/huangdaren1997">hyc</vendor>
+    <version>1.0.0</version>
+    <vendor email="hunag_yicheng@foxmail.com" url="https://github.com/hexffff0/eggs">hyc</vendor>
 
     <description><![CDATA[
-    Eggs is an IDEA plugin allows you to ....
+    Eggs是一个强大的Intellij IDEA 插件，它允许你在运行时编写Java代码与IDEA进行交互，最终得到你想要的效果，例如代码生成
     ]]></description>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <applicationService serviceImplementation="com.github.hexffff0.plugin.persistence.ExecuteUnitRepository"/>
+        <applicationConfigurable instance="com.github.hexffff0.plugin.config.ExecuteUnitConfigurable"/>
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
-        <action id="com.hyc.plugin.action.RunCodeAction"
-                class="com.hyc.plugin.action.RunCodeAction"
-                text="RunCode" description="RunCode">
+        <group id="com.github.hexffff0.plugin.action.RunCodeActionGroup"
+               class="com.github.hexffff0.plugin.action.RunCodeActionGroup"
+               text="RunCode" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
             <add-to-group group-id="GenerateGroup" anchor="first"/>
-        </action>
+        </group>
     </actions>
 </idea-plugin>

@@ -1,4 +1,4 @@
-package com.hyc.plugin.utils;
+package com.github.hexffff0.plugin.utils;
 
 public class SystemInfo {
 
