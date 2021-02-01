@@ -19,7 +19,7 @@ public class CodeTemplate {
     @XmlAttribute
     public static final String VERSION = "0.1";
 
-    private final String uuid;
+    public final String uuid;
 
     public String name = "NewTemplate";
 

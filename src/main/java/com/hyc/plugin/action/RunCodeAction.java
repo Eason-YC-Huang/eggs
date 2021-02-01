@@ -1,6 +1,7 @@
 package com.hyc.plugin.action;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
@@ -32,7 +33,7 @@ public class RunCodeAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         CodeTemplateRepository codeTemplateRepository = ServiceManager.getService(CodeTemplateRepository.class);
         System.err.println("------ hello world ------");
-        List<CodeTemplate> codeTemplateList = codeTemplateRepository.getCodeTemplateList();
+        Map<String, CodeTemplate> codeTemplateMap = codeTemplateRepository.getCodeTemplateMap();
 
         CodeTemplate codeTemplate = new CodeTemplate();
         codeTemplate.name = UUID.randomUUID().toString();
@@ -40,6 +41,6 @@ public class RunCodeAction extends AnAction {
         codeTemplate.className = "ClassName:" + currentTime;
         codeTemplate.code = "Code" + currentTime;
         codeTemplate.classBeanList = Lists.newArrayList(new ClassBean("ClassName2" + currentTime, "Code2" + currentTime));
-        codeTemplateList.add(codeTemplate);
+        codeTemplateMap.put(codeTemplate.uuid, codeTemplate);
     }
 }

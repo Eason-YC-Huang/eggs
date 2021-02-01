@@ -1,9 +1,12 @@
 package com.hyc.plugin.persistence;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.google.common.collect.Maps;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
@@ -14,12 +17,12 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 @State(name = "CodeTemplateRepository", storages = {@Storage("$APP_CONFIG$/CodeTemplateRepository.xml")})
 public class CodeTemplateRepository implements PersistentStateComponent<CodeTemplateRepository> {
 
-    private List<CodeTemplate> codeTemplateList = Lists.newArrayList();
+    private Map<String, CodeTemplate> codeTemplateMap = Maps.newConcurrentMap();
 
     @Override
     public @Nullable CodeTemplateRepository getState() {
-        if (this.codeTemplateList == null) {
-            this.codeTemplateList = Lists.newArrayList();
+        if (this.codeTemplateMap == null) {
+            this.codeTemplateMap = Maps.newConcurrentMap();
         }
         return this;
     }
@@ -29,11 +32,11 @@ public class CodeTemplateRepository implements PersistentStateComponent<CodeTemp
         XmlSerializerUtil.copyBean(state, this);
     }
 
-    public List<CodeTemplate> getCodeTemplateList() {
-        return codeTemplateList;
+    public Map<String, CodeTemplate> getCodeTemplateMap() {
+        return codeTemplateMap;
     }
 
-    public void setCodeTemplateList(List<CodeTemplate> codeTemplateList) {
-        this.codeTemplateList = codeTemplateList;
+    public void setCodeTemplateMap(Map<String, CodeTemplate> codeTemplateMap) {
+        this.codeTemplateMap = codeTemplateMap;
     }
 }
