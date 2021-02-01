@@ -16,6 +16,7 @@ import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.expr.Name;
+import com.hyc.plugin.persistence.CodeTemplate;
 import com.hyc.plugin.utils.SystemInfo;
 import com.intellij.util.PathUtil;
 /**
@@ -34,9 +35,9 @@ public class RunCodeHelper {
             InMemoryJavaCompiler jc = InMemoryJavaCompiler.newInstance();
             jc.ignoreWarnings();
             jc.useParentClassLoader(CLASS_LOADER);
-            String classPath = parseDependenciesClassPath(codeTemplate.template, context);
+            String classPath = parseDependenciesClassPath(codeTemplate.name, context);
             jc.useOptions("-classpath", classPath);
-            Class<?> clazz = jc.compile(codeTemplate.className, codeTemplate.template);
+            Class<?> clazz = jc.compile(codeTemplate.className, codeTemplate.name);
             Object obj = clazz.newInstance();
             Method method = clazz.getDeclaredMethod("main", Map.class);
             method.invoke(obj, context);

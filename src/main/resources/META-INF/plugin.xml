@@ -11,14 +11,8 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
 
-    <application-components>
-        <component>
-            <implementation-class>com.hyc.plugin.core.CodeTemplateRepository</implementation-class>
-        </component>
-    </application-components>
-
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.hyc.plugin.core.CodeTemplateRepository"/>
+        <applicationService serviceImplementation="com.hyc.plugin.persistence.CodeTemplateRepository"/>
     </extensions>
 
     <actions>

@@ -1,9 +1,12 @@
 package com.hyc.plugin.action;
 
+import java.util.List;
+import java.util.UUID;
 import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.hyc.plugin.core.CodeTemplateRepository;
+import com.hyc.plugin.persistence.CodeTemplate;
+import com.hyc.plugin.persistence.CodeTemplateRepository;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.components.ServiceManager;
@@ -25,5 +28,9 @@ public class RunCodeAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         CodeTemplateRepository codeTemplateRepository = ServiceManager.getService(CodeTemplateRepository.class);
         System.err.println("------ hello world ------");
+        List<CodeTemplate> codeTemplateList = codeTemplateRepository.getState().getCodeTemplateList();
+        CodeTemplate codeTemplate = new CodeTemplate();
+        codeTemplate.name = UUID.randomUUID().toString();
+        codeTemplateList.add(codeTemplate);
     }
 }
