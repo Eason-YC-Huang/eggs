@@ -11,6 +11,14 @@ public class ClassBean {
 
     private String content;
 
+    public ClassBean() {
+    }
+
+    public ClassBean(String className, String content) {
+        this.className = className;
+        this.content = content;
+    }
+
     public String getClassName() {
         return className;
     }

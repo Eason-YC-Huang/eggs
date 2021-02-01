@@ -5,6 +5,8 @@ import java.util.UUID;
 import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.google.common.collect.Lists;
+import com.hyc.plugin.persistence.ClassBean;
 import com.hyc.plugin.persistence.CodeTemplate;
 import com.hyc.plugin.persistence.CodeTemplateRepository;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -20,7 +22,9 @@ public class RunCodeAction extends AnAction {
     public RunCodeAction() {
     }
 
-    public RunCodeAction(@Nullable @ActionText String text, @Nullable @ActionDescription String description, @Nullable Icon icon) {
+    public RunCodeAction(@Nullable @ActionText String text,
+        @Nullable @ActionDescription String description,
+        @Nullable Icon icon) {
         super(text, description, icon);
     }
 
@@ -28,9 +32,14 @@ public class RunCodeAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         CodeTemplateRepository codeTemplateRepository = ServiceManager.getService(CodeTemplateRepository.class);
         System.err.println("------ hello world ------");
-        List<CodeTemplate> codeTemplateList = codeTemplateRepository.getState().getCodeTemplateList();
+        List<CodeTemplate> codeTemplateList = codeTemplateRepository.getCodeTemplateList();
+
         CodeTemplate codeTemplate = new CodeTemplate();
         codeTemplate.name = UUID.randomUUID().toString();
+        long currentTime = System.currentTimeMillis();
+        codeTemplate.className = "ClassName:" + currentTime;
+        codeTemplate.code = "Code" + currentTime;
+        codeTemplate.classBeanList = Lists.newArrayList(new ClassBean("ClassName2" + currentTime, "Code2" + currentTime));
         codeTemplateList.add(codeTemplate);
     }
 }

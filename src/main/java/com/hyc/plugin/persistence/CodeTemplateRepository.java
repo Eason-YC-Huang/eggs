@@ -14,20 +14,18 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 @State(name = "CodeTemplateRepository", storages = {@Storage("$APP_CONFIG$/CodeTemplateRepository.xml")})
 public class CodeTemplateRepository implements PersistentStateComponent<CodeTemplateRepository> {
 
-    private List<CodeTemplate> codeTemplateList;
+    private List<CodeTemplate> codeTemplateList = Lists.newArrayList();
 
     @Override
     public @Nullable CodeTemplateRepository getState() {
         if (this.codeTemplateList == null) {
             this.codeTemplateList = Lists.newArrayList();
         }
-        System.err.println("----------- getState -----------");
         return this;
     }
 
     @Override
     public void loadState(@NotNull CodeTemplateRepository state) {
-        System.err.println("----------- loadState -----------");
         XmlSerializerUtil.copyBean(state, this);
     }
 
