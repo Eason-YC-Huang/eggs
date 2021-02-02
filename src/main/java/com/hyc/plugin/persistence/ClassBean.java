@@ -9,14 +9,14 @@ public class ClassBean {
 
     private String className;
 
-    private String content;
+    private String sourceCode;
 
     public ClassBean() {
     }
 
-    public ClassBean(String className, String content) {
+    public ClassBean(String className, String sourceCode) {
         this.className = className;
-        this.content = content;
+        this.sourceCode = sourceCode;
     }
 
     public String getClassName() {
@@ -27,12 +27,12 @@ public class ClassBean {
         this.className = className;
     }
 
-    public String getContent() {
-        return content;
+    public String getSourceCode() {
+        return sourceCode;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setSourceCode(String sourceCode) {
+        this.sourceCode = sourceCode;
     }
 
     @Override
@@ -45,11 +45,11 @@ public class ClassBean {
         }
         ClassBean classBean = (ClassBean) o;
         return Objects.equal(getClassName(), classBean.getClassName()) &&
-            Objects.equal(getContent(), classBean.getContent());
+            Objects.equal(getSourceCode(), classBean.getSourceCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getClassName(), getContent());
+        return Objects.hashCode(getClassName(), getSourceCode());
     }
 }

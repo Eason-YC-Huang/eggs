@@ -12,7 +12,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.hyc.plugin.persistence.CodeTemplateRepository"/>
+        <applicationService serviceImplementation="com.hyc.plugin.persistence.ExecuteUnitRepository"/>
     </extensions>
 
     <actions>

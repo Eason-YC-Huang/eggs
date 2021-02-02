@@ -19,7 +19,7 @@ import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.expr.Name;
 import com.google.common.collect.Sets;
 import com.hyc.plugin.persistence.ClassBean;
-import com.hyc.plugin.persistence.CodeTemplate;
+import com.hyc.plugin.persistence.ExecuteUnit;
 import com.hyc.plugin.utils.SystemInfo;
 import com.intellij.util.PathUtil;
 /**
@@ -33,20 +33,20 @@ public class RunCodeHelper {
 
     private static final String IMPORT_CLASS = RunCodeHelper.class.getName();
 
-    public static void compileAndRunCode(@NotNull CodeTemplate codeTemplate, @NotNull Map<String, Object> context) {
+    public static void compileAndRunCode(@NotNull ExecuteUnit executeUnit, @NotNull Map<String, Object> context) {
         try {
             InMemoryJavaCompiler jc = InMemoryJavaCompiler.newInstance();
             jc.ignoreWarnings();
             jc.useParentClassLoader(CLASS_LOADER);
-            String classPath = parseDependenciesClassPath(codeTemplate, context);
+            String classPath = parseDependenciesClassPath(executeUnit, context);
             jc.useOptions("-classpath", classPath);
 
-            jc.addSource(codeTemplate.className, codeTemplate.code);
-            for (ClassBean classBean : codeTemplate.classBeanList) {
-                jc.addSource(classBean.getClassName(), classBean.getContent());
+            jc.addSource(executeUnit.className, executeUnit.sourceCode);
+            for (ClassBean classBean : executeUnit.classBeanList) {
+                jc.addSource(classBean.getClassName(), classBean.getSourceCode());
             }
 
-            Class<?> clazz = jc.compile(codeTemplate.className, codeTemplate.code);
+            Class<?> clazz = jc.compile(executeUnit.className, executeUnit.sourceCode);
             Object obj = clazz.newInstance();
             Method method = clazz.getDeclaredMethod("main", Map.class);
             method.invoke(obj, context);
@@ -55,13 +55,13 @@ public class RunCodeHelper {
         }
     }
 
-    private static String parseDependenciesClassPath(CodeTemplate codeTemplate, Map<String, Object> context) {
+    private static String parseDependenciesClassPath(ExecuteUnit executeUnit, Map<String, Object> context) {
 
         Set<String> dependenciesPath = Sets.newConcurrentHashSet();
-        dependenciesPath.addAll(doParseDependenciesClassPath(codeTemplate.code));
-        codeTemplate.classBeanList
+        dependenciesPath.addAll(doParseDependenciesClassPath(executeUnit.sourceCode));
+        executeUnit.classBeanList
             .parallelStream()
-            .map(ClassBean::getContent)
+            .map(ClassBean::getSourceCode)
             .forEach(sourceCode -> dependenciesPath.addAll(doParseDependenciesClassPath(sourceCode)));
 
         context.values()
@@ -69,7 +69,7 @@ public class RunCodeHelper {
                .filter(Objects::nonNull)
                .forEach(obj -> dependenciesPath.add(obj.getClass().getName()));
         dependenciesPath.add(System.getProperty("java.class.path"));
-        parseThirdPartLib(codeTemplate.libPath, dependenciesPath);
+        parseThirdPartLib(executeUnit.libPath, dependenciesPath);
         return String.join(SystemInfo.CLASS_PATH_DELIMITER, dependenciesPath);
     }
 

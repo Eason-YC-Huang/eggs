@@ -12,9 +12,9 @@ import com.intellij.util.xmlb.annotations.XCollection;
 /**
  * @author hyc
  */
-@XmlRootElement(name = "codeTemplate")
+@XmlRootElement(name = "executeUnit")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CodeTemplate {
+public class ExecuteUnit {
 
     @XmlAttribute
     public static final String VERSION = "0.1";
@@ -25,20 +25,20 @@ public class CodeTemplate {
 
     public String desc = "";
 
-    public String className = "";
-
     public String libPath = "";
 
-    public String code = "";
+    public String className = "";
+
+    public String sourceCode = "";
 
     @XCollection(propertyElementName = "classBeanList")
     public List<ClassBean> classBeanList = Lists.newArrayList();
 
-    public CodeTemplate(String uuid) {
+    public ExecuteUnit(String uuid) {
         this.uuid = uuid;
     }
 
-    public CodeTemplate() {
+    public ExecuteUnit() {
         this(UUID.randomUUID().toString());
     }
 
@@ -47,20 +47,20 @@ public class CodeTemplate {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof CodeTemplate)) {
+        if (!(o instanceof ExecuteUnit)) {
             return false;
         }
-        CodeTemplate that = (CodeTemplate) o;
+        ExecuteUnit that = (ExecuteUnit) o;
         return Objects.equal(uuid, that.uuid)
             && Objects.equal(name, that.name)
             && Objects.equal(className, that.className)
             && Objects.equal(libPath, that.libPath)
-            && Objects.equal(code, that.code)
+            && Objects.equal(sourceCode, that.sourceCode)
             && Objects.equal(classBeanList, that.classBeanList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(uuid, name, className, libPath, code, classBeanList);
+        return Objects.hashCode(uuid, name, className, libPath, sourceCode, classBeanList);
     }
 }
