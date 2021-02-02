@@ -1,5 +1,6 @@
 package com.hyc.plugin.persistence;
 
+import java.util.UUID;
 import com.google.common.base.Objects;
 /**
  * @author hyc
@@ -7,14 +8,18 @@ import com.google.common.base.Objects;
  */
 public class ClassBean {
 
+    private final String uuid;
+
     private String className;
 
     private String sourceCode;
 
     public ClassBean() {
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public ClassBean(String className, String sourceCode) {
+        this();
         this.className = className;
         this.sourceCode = sourceCode;
     }
@@ -35,6 +40,10 @@ public class ClassBean {
         this.sourceCode = sourceCode;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -44,12 +53,13 @@ public class ClassBean {
             return false;
         }
         ClassBean classBean = (ClassBean) o;
-        return Objects.equal(getClassName(), classBean.getClassName()) &&
+        return Objects.equal(getUuid(), classBean.getUuid()) &&
+            Objects.equal(getClassName(), classBean.getClassName()) &&
             Objects.equal(getSourceCode(), classBean.getSourceCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getClassName(), getSourceCode());
+        return Objects.hashCode(getUuid(), getClassName(), getSourceCode());
     }
 }

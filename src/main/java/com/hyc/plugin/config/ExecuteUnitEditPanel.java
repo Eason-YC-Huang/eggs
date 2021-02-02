@@ -1,11 +1,13 @@
 package com.hyc.plugin.config;
 
 import java.awt.Dimension;
+import java.util.Set;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import com.google.common.collect.Sets;
+import com.hyc.plugin.persistence.ClassBean;
 import com.hyc.plugin.persistence.ExecuteUnit;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
@@ -36,19 +38,34 @@ public class ExecuteUnitEditPanel {
 
     private JPanel codePanel;
 
+    private final Set<ClassBeanEditPanel> classBeanEditPanelSet = Sets.newHashSet();
+
     public ExecuteUnitEditPanel(ExecuteUnit executeUnit) {
         executeUnitNameText.setText(executeUnit.name);
         descriptionText.setText(executeUnit.desc);
         libPathText.setText(executeUnit.libPath);
         classNameText.setText(executeUnit.className);
-        // todo classBeanList
         addCodeEditor(executeUnit.sourceCode);
+
+        // add ClassTab
+        executeUnit.classBeanList.forEach(this::addClassBeanEditPanel);
+
+        // handle Add Class button event
+        addClassButton.addActionListener(event -> {
+            ClassBean classBean = new ClassBean("NewClass", "");
+            this.addClassBeanEditPanel(classBean);
+        });
     }
 
-    public ExecuteUnit getExecuteUnit() {
-        ExecuteUnit executeUnit = new ExecuteUnit();
-        // todo
-        return executeUnit;
+    private void addClassBeanEditPanel(ClassBean classBean) {
+        ClassBeanEditPanel classBeanEditPanel = new ClassBeanEditPanel(classBean, this);
+        classBeanEditPanelSet.add(classBeanEditPanel);
+        executeUnitPanel.addTab(classBean.getClassName(), classBeanEditPanel.getRootPanel());
+    }
+
+    public void removeClassBeanEditPanel(ClassBeanEditPanel classBeanEditPanel) {
+        this.classBeanEditPanelSet.remove(classBeanEditPanel);
+        this.executeUnitPanel.remove(classBeanEditPanel.getRootPanel());
     }
 
     private void addCodeEditor(String code) {
