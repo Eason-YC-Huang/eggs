@@ -2,6 +2,7 @@ package com.hyc.plugin.persistence;
 
 import java.util.UUID;
 import com.google.common.base.Objects;
+import com.sun.xml.bind.v2.model.core.ID;
 /**
  * @author hyc
  * @since 2021/2/1
@@ -16,6 +17,10 @@ public class ClassBean {
 
     public ClassBean() {
         this.uuid = UUID.randomUUID().toString();
+    }
+
+    public ClassBean(String uuid) {
+        this.uuid = uuid;
     }
 
     public ClassBean(String className, String sourceCode) {

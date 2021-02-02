@@ -2,6 +2,7 @@ package com.hyc.plugin.config;
 
 import java.awt.Dimension;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -38,9 +39,12 @@ public class ExecuteUnitEditPanel {
 
     private JPanel codePanel;
 
+    private Editor editor;
+
     private final Set<ClassBeanEditPanel> classBeanEditPanelSet = Sets.newHashSet();
 
     public ExecuteUnitEditPanel(ExecuteUnit executeUnit) {
+        executeUnitId = executeUnit.uuid;
         executeUnitNameText.setText(executeUnit.name);
         descriptionText.setText(executeUnit.desc);
         libPathText.setText(executeUnit.libPath);
@@ -71,7 +75,7 @@ public class ExecuteUnitEditPanel {
     private void addCodeEditor(String code) {
         EditorFactory factory = EditorFactory.getInstance();
         Document javaTemplate = factory.createDocument(code);
-        Editor editor = factory.createEditor(javaTemplate, null, FileTypeManager.getInstance().getFileTypeByExtension("java"), false);
+        this.editor = factory.createEditor(javaTemplate, null, FileTypeManager.getInstance().getFileTypeByExtension("java"), false);
         GridConstraints constraints = new GridConstraints(0, 0, 1, 1,
             GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
@@ -84,8 +88,47 @@ public class ExecuteUnitEditPanel {
         return rootPanel;
     }
 
+    public String id() {
+        return this.executeUnitId;
+    }
+
     public String name() {
-        return executeUnitNameText.getText();
+        return this.executeUnitNameText.getText();
+    }
+
+    public String desc() {
+        return this.descriptionText.getText();
+    }
+
+    public String libPath() {
+        return this.libPathText.getText();
+    }
+
+    public String className() {
+        return this.classNameText.getText();
+    }
+
+    public String sourceCode() {
+        return this.editor.getDocument().getText();
+    }
+
+    public int curTabIdx() {
+        return this.executeUnitPanel.getSelectedIndex();
+    }
+
+    public void setTabIdx(int tabIdx) {
+        this.executeUnitPanel.setSelectedIndex(tabIdx);
+    }
+
+    public ExecuteUnit getExecuteUnit() {
+        ExecuteUnit executeUnit = new ExecuteUnit(this.id());
+        executeUnit.name = this.name();
+        executeUnit.desc = this.desc();
+        executeUnit.libPath = this.libPath();
+        executeUnit.className = this.className();
+        executeUnit.sourceCode = this.sourceCode();
+        executeUnit.classBeanList = this.classBeanEditPanelSet.stream().map(ClassBeanEditPanel::getClassBean).collect(Collectors.toList());
+        return executeUnit;
     }
 
     @Override

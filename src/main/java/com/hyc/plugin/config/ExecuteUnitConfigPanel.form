@@ -53,13 +53,13 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="9fed5" class="javax.swing.JButton" binding="addButton" default-binding="true">
+                  <component id="9fed5" class="javax.swing.JButton" binding="addExecuteUnitButton" default-binding="true">
                     <constraints/>
                     <properties>
                       <text value="Add"/>
                     </properties>
                   </component>
-                  <component id="25645" class="javax.swing.JButton" binding="removeButton" default-binding="true">
+                  <component id="25645" class="javax.swing.JButton" binding="removeExecuteUnitButton" default-binding="true">
                     <constraints/>
                     <properties>
                       <enabled value="false"/>

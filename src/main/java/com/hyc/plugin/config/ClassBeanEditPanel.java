@@ -28,6 +28,8 @@ public class ClassBeanEditPanel {
 
     private String classBeanId;
 
+    private Editor editor;
+
     public ClassBeanEditPanel(ClassBean classBean, ExecuteUnitEditPanel parent) {
         this.classBeanId = classBean.getUuid();
         this.classNameText.setText(classBean.getClassName());
@@ -45,7 +47,7 @@ public class ClassBeanEditPanel {
     private void addCodeEditor(String code) {
         EditorFactory factory = EditorFactory.getInstance();
         Document javaTemplate = factory.createDocument(code);
-        Editor editor = factory.createEditor(javaTemplate, null, FileTypeManager.getInstance().getFileTypeByExtension("java"), false);
+        this.editor = factory.createEditor(javaTemplate, null, FileTypeManager.getInstance().getFileTypeByExtension("java"), false);
         GridConstraints constraints = new GridConstraints(0, 0, 1, 1,
             GridConstraints.ANCHOR_WEST, GridConstraints.FILL_BOTH,
             GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
@@ -56,6 +58,13 @@ public class ClassBeanEditPanel {
 
     public JPanel getRootPanel() {
         return rootPanel;
+    }
+
+    public ClassBean getClassBean() {
+        ClassBean classBean = new ClassBean(this.classBeanId);
+        classBean.setClassName(classNameText.getText());
+        classBean.setSourceCode(editor.getDocument().getText());
+        return classBean;
     }
 
     @Override

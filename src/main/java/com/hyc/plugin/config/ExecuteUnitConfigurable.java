@@ -1,8 +1,13 @@
 package com.hyc.plugin.config;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.swing.JComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.hyc.plugin.persistence.ExecuteUnit;
 import com.hyc.plugin.persistence.ExecuteUnitRepository;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.ConfigurationException;
@@ -41,11 +46,31 @@ public class ExecuteUnitConfigurable implements SearchableConfigurable {
 
     @Override
     public boolean isModified() {
+
+        if (executeUnitConfigPanel == null) {
+            return false;
+        }
+
+        List<ExecuteUnit> curExecuteUnitList = executeUnitConfigPanel.getExecuteUnitList();
+        if (executeUnitRepository.size() != curExecuteUnitList.size()) {
+            return true;
+        }
+
+        for (ExecuteUnit curExecuteUnit : curExecuteUnitList) {
+            ExecuteUnit oldExecuteUnit = executeUnitRepository.getExecuteUnit(curExecuteUnit.uuid);
+            if (oldExecuteUnit == null || !Objects.equals(curExecuteUnit, oldExecuteUnit)) {
+                return true;
+            }
+        }
+
         return false;
     }
 
     @Override
     public void apply() throws ConfigurationException {
-
+        List<ExecuteUnit> curExecuteUnitList = executeUnitConfigPanel.getExecuteUnitList();
+        Map<String, ExecuteUnit> curExecuteUnitMap = curExecuteUnitList.stream().collect(Collectors.toConcurrentMap(x -> x.uuid, x -> x));
+        executeUnitRepository.setExecuteUnitMap(curExecuteUnitMap);
+        executeUnitConfigPanel.refresh(curExecuteUnitList);
     }
 }

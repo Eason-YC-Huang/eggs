@@ -29,6 +29,14 @@ public class ExecuteUnitRepository implements PersistentStateComponent<ExecuteUn
         XmlSerializerUtil.copyBean(state, this);
     }
 
+    public int size() {
+        return this.executeUnitMap.size();
+    }
+
+    public ExecuteUnit getExecuteUnit(String executeUnitId) {
+        return executeUnitMap.get(executeUnitId);
+    }
+
     public Map<String, ExecuteUnit> getExecuteUnitMap() {
         return executeUnitMap;
     }
