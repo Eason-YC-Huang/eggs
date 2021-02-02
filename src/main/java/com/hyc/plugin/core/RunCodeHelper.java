@@ -21,6 +21,8 @@ import com.google.common.collect.Sets;
 import com.hyc.plugin.persistence.ClassBean;
 import com.hyc.plugin.persistence.ExecuteUnit;
 import com.hyc.plugin.utils.SystemInfo;
+import com.intellij.openapi.components.ServiceManager;
+import com.intellij.psi.PsiClass;
 import com.intellij.util.PathUtil;
 /**
  * @author hyc
@@ -41,7 +43,6 @@ public class RunCodeHelper {
             String classPath = parseDependenciesClassPath(executeUnit, context);
             jc.useOptions("-classpath", classPath);
 
-            jc.addSource(executeUnit.className, executeUnit.sourceCode);
             for (ClassBean classBean : executeUnit.classBeanList) {
                 jc.addSource(classBean.getClassName(), classBean.getSourceCode());
             }
@@ -68,7 +69,10 @@ public class RunCodeHelper {
                .stream()
                .filter(Objects::nonNull)
                .forEach(obj -> dependenciesPath.add(obj.getClass().getName()));
+
         dependenciesPath.add(System.getProperty("java.class.path"));
+        dependenciesPath.add(PathUtil.getJarPathForClass(ServiceManager.class));
+        dependenciesPath.add(PathUtil.getJarPathForClass(PsiClass.class));
         parseThirdPartLib(executeUnit.libPath, dependenciesPath);
         return String.join(SystemInfo.CLASS_PATH_DELIMITER, dependenciesPath);
     }
