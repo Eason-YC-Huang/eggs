@@ -13,6 +13,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.hyc.plugin.persistence.ExecuteUnitRepository"/>
+        <applicationConfigurable instance="com.hyc.plugin.config.ExecuteUnitConfigurable"/>
     </extensions>
 
     <actions>
