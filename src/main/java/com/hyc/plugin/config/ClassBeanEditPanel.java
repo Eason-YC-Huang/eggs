@@ -9,6 +9,7 @@ import com.hyc.plugin.persistence.ClassBean;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
+import com.intellij.openapi.editor.impl.EditorFactoryImpl;
 import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -65,6 +66,10 @@ public class ClassBeanEditPanel {
         classBean.setClassName(classNameText.getText());
         classBean.setSourceCode(editor.getDocument().getText());
         return classBean;
+    }
+
+    public void releaseEditor() {
+        EditorFactoryImpl.getInstance().releaseEditor(editor);
     }
 
     @Override

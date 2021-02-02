@@ -2,6 +2,7 @@ package com.hyc.plugin.config;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -48,8 +49,13 @@ public class ExecuteUnitConfigPanel {
         this.addExecuteUnitListener(addExecuteUnitButton);
         this.removeExecuteUnitListener(removeExecuteUnitButton);
 
-        this.resetTabPane(executeUnitRepository.getExecuteUnitMap().values());
+        Map<String, ExecuteUnit> executeUnitMap = executeUnitRepository.getExecuteUnitMap();
+        if (executeUnitMap.size() != 0) {
+            this.resetTabPane(executeUnitMap.values());
+        }
     }
+
+    // ----------- private method -----------
 
     private void addExecuteUnitListener(JButton addExecuteUnitButton) {
         addExecuteUnitButton.addActionListener(event -> {
@@ -70,7 +76,9 @@ public class ExecuteUnitConfigPanel {
                 int result = Messages.showYesNoDialog("Delete this execute unit?", "Delete", null);
                 if (result == Messages.OK) {
                     int lastIndex = executeUnitList.getAnchorSelectionIndex();
+                    ExecuteUnitEditPanel executeUnitEditPanel = executeUnitListModel.get(index);
                     executeUnitListModel.remove(index);
+                    executeUnitEditPanel.releaseEditor();
                     int nextIndex = -1;
                     if (lastIndex >= 0 && lastIndex < index || lastIndex == index && index < size-1) {
                         nextIndex = lastIndex;
@@ -123,6 +131,8 @@ public class ExecuteUnitConfigPanel {
         this.executeUnitListModel.get(executeUnitIdx).setTabIdx(tabIdx);
     }
 
+    // ----------- public method -----------
+
     public JPanel getRootPanel() {
         return this.rootPanel;
     }
@@ -142,6 +152,13 @@ public class ExecuteUnitConfigPanel {
         int tabIdx = this.executeUnitListModel.get(executeUnitIdx).curTabIdx();
         this.executeUnitListModel.removeAllElements();
         this.resetTabPane(executeUnitList, executeUnitIdx, tabIdx);
+    }
+
+    public void releaseEditor() {
+        for (int i = 0; i < executeUnitListModel.size(); i++) {
+            ExecuteUnitEditPanel executeUnitEditPanel = executeUnitListModel.get(i);
+            executeUnitEditPanel.releaseEditor();
+        }
     }
 
 

@@ -7,19 +7,22 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import org.jetbrains.annotations.NotNull;
 import com.google.common.collect.Sets;
 import com.hyc.plugin.persistence.ClassBean;
 import com.hyc.plugin.persistence.ExecuteUnit;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
+import com.intellij.openapi.editor.impl.EditorFactoryImpl;
 import com.intellij.openapi.fileTypes.FileTypeManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.uiDesigner.core.GridConstraints;
 /**
  * @author hyc
  * @since 2021/2/2
  */
-public class ExecuteUnitEditPanel {
+public class ExecuteUnitEditPanel{
 
     private JPanel rootPanel;
 
@@ -70,6 +73,7 @@ public class ExecuteUnitEditPanel {
     public void removeClassBeanEditPanel(ClassBeanEditPanel classBeanEditPanel) {
         this.classBeanEditPanelSet.remove(classBeanEditPanel);
         this.executeUnitPanel.remove(classBeanEditPanel.getRootPanel());
+        classBeanEditPanel.releaseEditor();
     }
 
     private void addCodeEditor(String code) {
@@ -129,6 +133,11 @@ public class ExecuteUnitEditPanel {
         executeUnit.sourceCode = this.sourceCode();
         executeUnit.classBeanList = this.classBeanEditPanelSet.stream().map(ClassBeanEditPanel::getClassBean).collect(Collectors.toList());
         return executeUnit;
+    }
+
+    public void releaseEditor() {
+        EditorFactoryImpl.getInstance().releaseEditor(this.editor);
+        classBeanEditPanelSet.forEach(ClassBeanEditPanel::releaseEditor);
     }
 
     @Override

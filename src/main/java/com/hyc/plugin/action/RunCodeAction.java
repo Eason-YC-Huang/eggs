@@ -43,8 +43,6 @@ public class RunCodeAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        // 为什么每次都调用ServiceManager获取CodeTemplateRepository呢?
-        // 就是目前我不知道是否会有数据不同的问题
         ExecuteUnitRepository executeUnitRepository = ServiceManager.getService(ExecuteUnitRepository.class);
         Map<String, ExecuteUnit> executeUnitMap = executeUnitRepository.getExecuteUnitMap();
         ExecuteUnit executeUnit = executeUnitMap.get(codeTemplateId);
