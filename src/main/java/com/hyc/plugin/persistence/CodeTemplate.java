@@ -23,6 +23,8 @@ public class CodeTemplate {
 
     public String name = "NewTemplate";
 
+    public String desc = "";
+
     public String className = "";
 
     public String libPath = "";

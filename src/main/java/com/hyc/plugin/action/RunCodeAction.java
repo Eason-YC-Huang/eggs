@@ -1,12 +1,14 @@
 package com.hyc.plugin.action;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.hyc.plugin.core.RunCodeHelper;
 import com.hyc.plugin.persistence.ClassBean;
 import com.hyc.plugin.persistence.CodeTemplate;
 import com.hyc.plugin.persistence.CodeTemplateRepository;
@@ -20,10 +22,23 @@ import com.intellij.openapi.util.NlsActions.ActionText;
  */
 public class RunCodeAction extends AnAction {
 
+    private String codeTemplateId;
+
+    /** you should never call this constructor on your code */
     public RunCodeAction() {
     }
 
-    public RunCodeAction(@Nullable @ActionText String text,
+    public static RunCodeAction of(String codeTemplateId) {
+        CodeTemplateRepository codeTemplateRepository = ServiceManager.getService(CodeTemplateRepository.class);
+        Map<String, CodeTemplate> codeTemplateMap = codeTemplateRepository.getCodeTemplateMap();
+        CodeTemplate codeTemplate = codeTemplateMap.get(codeTemplateId);
+        RunCodeAction runCodeAction = new RunCodeAction(codeTemplate.name, codeTemplate.desc, null);
+        runCodeAction.codeTemplateId = codeTemplate.uuid;
+        return runCodeAction;
+    }
+
+
+    private RunCodeAction(@Nullable @ActionText String text,
         @Nullable @ActionDescription String description,
         @Nullable Icon icon) {
         super(text, description, icon);
@@ -31,16 +46,13 @@ public class RunCodeAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
+        // 为什么每次都调用ServiceManager获取CodeTemplateRepository呢?
+        // 就是目前我不知道是否会有数据不同的问题
         CodeTemplateRepository codeTemplateRepository = ServiceManager.getService(CodeTemplateRepository.class);
-        System.err.println("------ hello world ------");
         Map<String, CodeTemplate> codeTemplateMap = codeTemplateRepository.getCodeTemplateMap();
-
-        CodeTemplate codeTemplate = new CodeTemplate();
-        codeTemplate.name = UUID.randomUUID().toString();
-        long currentTime = System.currentTimeMillis();
-        codeTemplate.className = "ClassName:" + currentTime;
-        codeTemplate.code = "Code" + currentTime;
-        codeTemplate.classBeanList = Lists.newArrayList(new ClassBean("ClassName2" + currentTime, "Code2" + currentTime));
-        codeTemplateMap.put(codeTemplate.uuid, codeTemplate);
+        CodeTemplate codeTemplate = codeTemplateMap.get(codeTemplateId);
+        HashMap<String, Object> context = Maps.newHashMap();
+        context.put("AnActionEvent", e);
+        RunCodeHelper.compileAndRunCode(codeTemplate, context);
     }
 }
