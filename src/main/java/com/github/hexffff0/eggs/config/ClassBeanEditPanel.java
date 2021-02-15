@@ -1,11 +1,11 @@
-package com.github.hexffff0.plugin.config;
+package com.github.hexffff0.eggs.config;
 
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import com.google.common.base.Objects;
-import com.github.hexffff0.plugin.persistence.ClassBean;
+import com.github.hexffff0.eggs.persistence.ClassBean;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;

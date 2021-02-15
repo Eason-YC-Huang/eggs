@@ -1,4 +1,4 @@
-package com.github.hexffff0.plugin.persistence;
+package com.github.hexffff0.eggs.persistence;
 
 import java.util.List;
 import java.util.Map;

@@ -1,10 +1,10 @@
-package com.github.hexffff0.plugin.action;
+package com.github.hexffff0.eggs.action;
 
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.github.hexffff0.plugin.persistence.ExecuteUnit;
-import com.github.hexffff0.plugin.persistence.ExecuteUnitRepository;
+import com.github.hexffff0.eggs.persistence.ExecuteUnit;
+import com.github.hexffff0.eggs.persistence.ExecuteUnitRepository;
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;

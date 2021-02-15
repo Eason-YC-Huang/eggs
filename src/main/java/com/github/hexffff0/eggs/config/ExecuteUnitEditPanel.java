@@ -1,4 +1,4 @@
-package com.github.hexffff0.plugin.config;
+package com.github.hexffff0.eggs.config;
 
 import java.awt.Dimension;
 import java.util.Set;
@@ -7,8 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import com.github.hexffff0.plugin.persistence.ClassBean;
-import com.github.hexffff0.plugin.persistence.ExecuteUnit;
+import com.github.hexffff0.eggs.persistence.ClassBean;
+import com.github.hexffff0.eggs.persistence.ExecuteUnit;
 import com.google.common.collect.Sets;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;

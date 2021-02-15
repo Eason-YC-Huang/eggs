@@ -1,13 +1,13 @@
-package com.github.hexffff0.plugin.action;
+package com.github.hexffff0.eggs.action;
 
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.github.hexffff0.plugin.core.RunCodeHelper;
-import com.github.hexffff0.plugin.persistence.ExecuteUnit;
-import com.github.hexffff0.plugin.persistence.ExecuteUnitRepository;
+import com.github.hexffff0.eggs.core.RunCodeHelper;
+import com.github.hexffff0.eggs.persistence.ExecuteUnit;
+import com.github.hexffff0.eggs.persistence.ExecuteUnitRepository;
 import com.google.common.collect.Maps;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;

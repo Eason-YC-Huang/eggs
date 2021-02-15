@@ -1,4 +1,4 @@
-package com.github.hexffff0.plugin.utils;
+package com.github.hexffff0.eggs.utils;
 
 import java.awt.BorderLayout;
 import java.util.List;

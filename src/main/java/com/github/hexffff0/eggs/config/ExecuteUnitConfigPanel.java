@@ -1,4 +1,4 @@
-package com.github.hexffff0.plugin.config;
+package com.github.hexffff0.eggs.config;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,9 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import com.github.hexffff0.plugin.persistence.ExecuteUnit;
-import com.github.hexffff0.plugin.persistence.ExecuteUnitRepository;
-import com.github.hexffff0.plugin.persistence.ExecuteUnitList;
+import com.github.hexffff0.eggs.persistence.ExecuteUnit;
+import com.github.hexffff0.eggs.persistence.ExecuteUnitRepository;
+import com.github.hexffff0.eggs.persistence.ExecuteUnitList;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;

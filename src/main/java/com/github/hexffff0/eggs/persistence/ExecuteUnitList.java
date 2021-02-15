@@ -1,4 +1,4 @@
-package com.github.hexffff0.plugin.persistence;
+package com.github.hexffff0.eggs.persistence;
 
 import java.io.StringReader;
 import java.io.StringWriter;

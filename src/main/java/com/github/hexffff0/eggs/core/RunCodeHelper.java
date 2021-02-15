@@ -1,4 +1,4 @@
-package com.github.hexffff0.plugin.core;
+package com.github.hexffff0.eggs.core;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -12,14 +12,14 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.mdkt.compiler.InMemoryJavaCompiler;
-import com.github.hexffff0.plugin.persistence.ClassBean;
-import com.github.hexffff0.plugin.persistence.ExecuteUnit;
+import com.github.hexffff0.eggs.persistence.ClassBean;
+import com.github.hexffff0.eggs.persistence.ExecuteUnit;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.expr.Name;
 import com.google.common.collect.Sets;
-import com.github.hexffff0.plugin.utils.SystemInfo;
+import com.github.hexffff0.eggs.utils.SystemInfo;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiClass;

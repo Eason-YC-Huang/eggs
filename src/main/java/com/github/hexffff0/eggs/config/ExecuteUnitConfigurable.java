@@ -1,4 +1,4 @@
-package com.github.hexffff0.plugin.config;
+package com.github.hexffff0.eggs.config;
 
 import java.util.List;
 import java.util.Map;
@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import javax.swing.JComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.github.hexffff0.plugin.persistence.ExecuteUnit;
-import com.github.hexffff0.plugin.persistence.ExecuteUnitRepository;
+import com.github.hexffff0.eggs.persistence.ExecuteUnit;
+import com.github.hexffff0.eggs.persistence.ExecuteUnitRepository;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;

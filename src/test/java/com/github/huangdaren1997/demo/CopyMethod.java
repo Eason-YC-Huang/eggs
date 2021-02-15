@@ -2,7 +2,7 @@ package com.github.huangdaren1997.demo;
 
 import java.util.List;
 import java.util.Map;
-import com.github.hexffff0.plugin.utils.JavaUtils;
+import com.github.hexffff0.eggs.utils.JavaUtils;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
