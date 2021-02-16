@@ -33,6 +33,8 @@ intellij {
 //     intellij.version and intellij.localPath should not be specified at the same time.
      intellij.localPath '/Applications/IntelliJ IDEA.app'
 //    intellij.version '2020.2.2'
+    updateSinceUntilBuild false
+
 }
 
 task sourcesJar(type: Jar) {
@@ -105,9 +107,13 @@ publishPlugin {
 }
 
 patchPluginXml {
+
+    sinceBuild 191
+
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+  version 1.0.2 <p>Enable run code on ConsoleEditorPopupMenu</P>
+  version 1.0.1 <p>Add English description</P>
+  version 1.0.0 <p>First release</P>"""
 }
 
 test {
