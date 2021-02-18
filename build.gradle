@@ -31,8 +31,8 @@ java {
 intellij {
     plugins = ['java', 'maven']
 //     intellij.version and intellij.localPath should not be specified at the same time.
-     intellij.localPath '/Applications/IntelliJ IDEA.app'
-//    intellij.version '2020.2.2'
+//     intellij.localPath '/Applications/IntelliJ IDEA.app'
+    intellij.version '2020.2.2'
     updateSinceUntilBuild false
 
 }
@@ -111,9 +111,9 @@ patchPluginXml {
     sinceBuild 191
 
     changeNotes """
-  version 1.0.2 <p>Enable run code on ConsoleEditorPopupMenu</P>
-  version 1.0.1 <p>Add English description</P>
-  version 1.0.0 <p>First release</P>"""
+  <p>version 1.0.2 Enable run code on ConsoleEditorPopupMenu</P>
+  <p>version 1.0.1 Add English description</P>
+  <p>version 1.0.0 First release</P>"""
 }
 
 test {

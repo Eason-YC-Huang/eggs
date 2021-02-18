@@ -4,8 +4,12 @@
     <vendor email="hunag_yicheng@foxmail.com" url="https://github.com/hexffff0/eggs">Yicheng Huang</vendor>
 
     <description><![CDATA[
-    Eggs是一个强大的Intellij IDEA 插件，它允许你在运行时编写Java代码与IDEA进行交互，最终得到你想要的效果，例如代码生成。
-    Eggs is an Intellij IDEA plugin that allows you to write Java code to interact with IDEA, E.g. creating customized code generators
+    <p>Eggs is an Intellij IDEA plugin that allows you to write Java code to interact with IDEA.</p>
+    <ol>
+        <li>Write your Java code in the settings panel</li>
+        <li>Find the RunCode option on the Tools menu and select to run the code you wrote</li>
+    </ol>
+    <p>more usage:<a href="https://github.com/hexffff0/eggs">https://github.com/hexffff0/eggs</p>
     ]]></description>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
