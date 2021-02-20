@@ -7,14 +7,14 @@ public class SystemInfo {
     public static final String OS;
 
     static {
-        String osInfo = System.getProperty("os.name");
-        if (osInfo.toLowerCase().contains("windows")) {
+        String osInfo = System.getProperty("os.name", "unknown").toLowerCase();
+        if (osInfo.contains("windows")) {
             OS = "windows";
             CLASS_PATH_DELIMITER = ";";
-        } else if (osInfo.toLowerCase().contains("mac")) {
+        } else if (osInfo.contains("mac")) {
             OS = "mac";
             CLASS_PATH_DELIMITER = ":";
-        }else if (osInfo.toLowerCase().contains("linux")) {
+        }else if (osInfo.contains("linux")) {
             OS = "linux";
             CLASS_PATH_DELIMITER = ":";
         }else {

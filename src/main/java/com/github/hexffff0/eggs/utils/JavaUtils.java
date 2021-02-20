@@ -8,6 +8,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.google.common.collect.Lists;
+import com.intellij.codeInsight.actions.ReformatCodeProcessor;
 import com.intellij.codeInsight.generation.PsiElementClassMember;
 import com.intellij.codeInsight.generation.PsiFieldMember;
 import com.intellij.codeInsight.generation.PsiMethodMember;
@@ -91,9 +92,9 @@ public class JavaUtils {
             return Lists.newArrayList();
         }
         return selectedElements
-                           .stream()
-                           .map(PsiElementClassMember::getElement)
-                           .collect(Collectors.toList());
+            .stream()
+            .map(PsiElementClassMember::getElement)
+            .collect(Collectors.toList());
     }
 
     public static List<PsiMethod> selectMethods(@NotNull PsiClass psiClass,
@@ -132,9 +133,7 @@ public class JavaUtils {
 
     public static String getSelectedText(@NotNull Editor editor) {
         final SelectionModel selectionModel = editor.getSelectionModel();
-        String text = selectionModel.getSelectedText();
-        selectionModel.removeSelection();
-        return text;
+        return selectionModel.getSelectedText();
     }
 
     public static void writeToCaret(String content, @Nullable PsiFile file, @NotNull Editor editor) {
@@ -144,42 +143,44 @@ public class JavaUtils {
             project = editor.getProject();
         } else if (file != null) {
             project = file.getProject();
-        }else{
+        } else {
             logger.error("write action failed, cannot get project from editor and file");
             return;
         }
 
         final Document document = editor.getDocument();
         final SelectionModel selectionModel = editor.getSelectionModel();
-
         final int start = selectionModel.getSelectionStart();
         final int end = selectionModel.getSelectionEnd();
+        selectionModel.removeSelection();
 
         WriteCommandAction.runWriteCommandAction(project, () -> {
             document.replaceString(start, end, content);
             PsiDocumentManager.getInstance(project).commitDocument(document);
-            if (file instanceof PsiJavaFile) {
-                JavaCodeStyleManager.getInstance(project).shortenClassReferences(file);
+            if (file != null) {
+                reformatCode(file, true);
+                if (file instanceof PsiJavaFile) {
+                    JavaCodeStyleManager.getInstance(project).shortenClassReferences(file);
+                }
             }
         });
-        selectionModel.removeSelection();
-        if (file != null) {
-            reformatCode(file);
-        }
     }
 
     public static void writeToEndOfClass(String content, @NotNull PsiClass psiClass) {
         Project project = psiClass.getProject();
-        int offset = psiClass.getTextRange().getEndOffset() - 1;
         Document document = PsiDocumentManager.getInstance(project).getDocument(psiClass.getContainingFile());
+        if (document == null) {
+            return;
+        }
         WriteCommandAction.runWriteCommandAction(project, () -> {
+            int offset = psiClass.getTextRange().getEndOffset() - 1;
             document.insertString(offset, content);
             PsiDocumentManager.getInstance(project).commitDocument(document);
             if (psiClass instanceof PsiJavaFile) {
                 JavaCodeStyleManager.getInstance(project).shortenClassReferences(psiClass);
             }
         });
-        reformatCode(psiClass);
+        reformatCode(psiClass, true);
     }
 
     public static PsiJavaFile createNewClass(String content, String className, @NotNull PsiDirectory directory) {
@@ -193,7 +194,7 @@ public class JavaUtils {
         final PsiFile targetFile = PsiFileFactory.getInstance(project)
                                                  .createFileFromText(className + ".java", JavaFileType.INSTANCE, content);
         JavaCodeStyleManager.getInstance(project).shortenClassReferences(targetFile);
-        CodeStyleManager.getInstance(project).reformat(targetFile);
+        reformatCode(targetFile, true);
 
         WriteCommandAction.runWriteCommandAction(project, () -> {
             try {
@@ -213,8 +214,10 @@ public class JavaUtils {
     }
 
     public static void reformatCode(PsiElement psiElement) {
-        Project project = psiElement.getProject();
-        CodeStyleManager.getInstance(project).reformat(psiElement);
+        new ReformatCodeProcessor(psiElement.getContainingFile(), false).run();
     }
 
+    public static void reformatCode(PsiElement psiElement, boolean processChangedTextOnly) {
+        new ReformatCodeProcessor(psiElement.getContainingFile(), processChangedTextOnly).run();
+    }
 }
