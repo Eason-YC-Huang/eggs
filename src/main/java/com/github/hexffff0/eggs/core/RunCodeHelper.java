@@ -11,15 +11,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.mdkt.compiler.DynamicClassLoader;
 import org.mdkt.compiler.InMemoryJavaCompiler;
 import com.github.hexffff0.eggs.persistence.ClassBean;
 import com.github.hexffff0.eggs.persistence.ExecuteUnit;
+import com.github.hexffff0.eggs.utils.SystemInfo;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.expr.Name;
 import com.google.common.collect.Sets;
-import com.github.hexffff0.eggs.utils.SystemInfo;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.PsiClass;
@@ -39,7 +40,7 @@ public class RunCodeHelper {
         try {
             InMemoryJavaCompiler jc = InMemoryJavaCompiler.newInstance();
             jc.ignoreWarnings();
-            jc.useParentClassLoader(CLASS_LOADER);
+            jc.useParentClassLoader(new DynamicClassLoader(CLASS_LOADER));
             String classPath = parseDependenciesClassPath(executeUnit, context);
             jc.useOptions("-classpath", classPath);
 
