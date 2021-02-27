@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.github.hexffff0'
-version '1.0.3'
+version '1.0.4'
 
 repositories {
     mavenCentral()
@@ -111,6 +111,8 @@ patchPluginXml {
     sinceBuild 191
 
     changeNotes """
+  <p>version 1.0.4 Fix update ExecuteUnit not working</P>
+  <p>version 1.0.3 Add CommonTextEditor</P>
   <p>version 1.0.2 Enable run code on ConsoleEditorPopupMenu</P>
   <p>version 1.0.1 Add English description</P>
   <p>version 1.0.0 First release</P>"""
