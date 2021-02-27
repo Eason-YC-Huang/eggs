@@ -1,4 +1,4 @@
-package com.github.hexffff0.eggs.config;
+package com.github.hexffff0.eggs.settings;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.github.hexffff0.eggs.persistence.ExecuteUnit;
 import com.github.hexffff0.eggs.persistence.ExecuteUnitRepository;
+import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
@@ -72,5 +73,7 @@ public class ExecuteUnitConfigurable implements SearchableConfigurable {
         Map<String, ExecuteUnit> curExecuteUnitMap = curExecuteUnitList.stream().collect(Collectors.toConcurrentMap(x -> x.uuid, x -> x));
         executeUnitRepository.setExecuteUnitMap(curExecuteUnitMap);
         executeUnitConfigPanel.refresh(curExecuteUnitList);
+        curExecuteUnitList.stream().map(executeUnit -> executeUnit.uuid)
+                          .forEach(actionId -> ActionManager.getInstance().unregisterAction(actionId));
     }
 }

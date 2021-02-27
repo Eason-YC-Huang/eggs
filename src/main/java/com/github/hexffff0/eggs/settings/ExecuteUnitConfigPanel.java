@@ -1,4 +1,4 @@
-package com.github.hexffff0.eggs.config;
+package com.github.hexffff0.eggs.settings;
 
 import java.io.IOException;
 import java.nio.file.Files;

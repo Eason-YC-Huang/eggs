@@ -20,7 +20,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.github.hexffff0.eggs.persistence.ExecuteUnitRepository"/>
-        <applicationConfigurable instance="com.github.hexffff0.eggs.config.ExecuteUnitConfigurable"/>
+        <applicationConfigurable instance="com.github.hexffff0.eggs.settings.ExecuteUnitConfigurable"/>
     </extensions>
 
     <actions>

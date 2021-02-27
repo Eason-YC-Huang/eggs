@@ -21,7 +21,7 @@ Eggs是一个强大的Intellij IDEA 插件，它允许你在运行时编写Java�
 
 在`Settings`面板新增并编写执行单元，如下图
 
-![image-20210203142929543](/Users/0xffff0/coding/java/eggs/doc/images/example-1.png)
+![image-20210203142929543](./doc/images/example-1.png)
 
 代码如下
 
@@ -60,15 +60,15 @@ public class CopyMethod {
 
 ## 运行执行单元
 
-![image-20210203143509638](/Users/0xffff0/coding/java/eggs/doc/images/example-2.png)
+![image-20210203143509638](./doc/images/example-2.png)
 
-![image-20210208134611781](/Users/0xffff0/coding/java/eggs/doc/images/example-7.png)
+![image-20210208134611781](./doc/images/example-7.png)
 
 ## 如何编写执行单元？我可以使用哪些类？
 
 克隆 [Incubator](https://github.com/hexffff0/incubator) 项目，在该项目下编写你的执行单元（你可以使用所有你在该项目下能引用到的类）
 
-![image-20210208134928962](/Users/0xffff0/coding/java/eggs/doc/images/example-8.png)
+![image-20210208134928962](./doc/images/example-8.png)
 
 # Installation
 
