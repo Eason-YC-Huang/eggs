@@ -31,8 +31,8 @@ java {
 intellij {
     plugins = ['java', 'maven']
 //     intellij.version and intellij.localPath should not be specified at the same time.
-//     intellij.localPath '/Applications/IntelliJ IDEA.app'
-    intellij.version '2020.2.2'
+     intellij.localPath '/Applications/IntelliJ IDEA.app'
+//    intellij.version '2020.2.2'
     updateSinceUntilBuild false
 
 }
