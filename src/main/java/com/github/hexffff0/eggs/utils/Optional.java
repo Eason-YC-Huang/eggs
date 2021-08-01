@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+/** Optional Class from OpenJDK 14 */
 public final class Optional<T> {
 
     private static final Optional<?> EMPTY = new Optional<>(null);

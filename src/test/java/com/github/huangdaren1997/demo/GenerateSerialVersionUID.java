@@ -33,8 +33,7 @@ public class GenerateSerialVersionUID {
               .filter(GenerateSerialVersionUID::needsUIDField)
               .forEach(psiClass -> {
                   final long serialVersionUIDValue = SerialVersionUIDBuilder.computeDefaultSUID(psiClass);
-                  final PsiElementFactory psiElementFactory = JavaPsiFacade.getInstance(psiClass.getProject())
-                                                                           .getElementFactory();
+                  final PsiElementFactory psiElementFactory = JavaPsiFacade.getInstance(psiClass.getProject()).getElementFactory();
                   final CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(psiClass.getProject());
 
                   if (codeStyleManager != null) {
@@ -67,11 +66,7 @@ public class GenerateSerialVersionUID {
             return false;
         }
 
-        if (hasUIDField(aClass)) {
-            return false;
-        }
-
-        return true;
+        return !hasUIDField(aClass);
     }
 
     public static boolean hasUIDField(@Nullable PsiClass psiClass) {

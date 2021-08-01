@@ -15,6 +15,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 /**
  * 通用的文本编辑器
  * 因为对IDEA的相关API不熟悉,目前需要手动调用release方法释放editor
+ * @author hyc
  */
 public class CommonTextEditor extends DialogWrapper {
 
@@ -36,7 +37,8 @@ public class CommonTextEditor extends DialogWrapper {
     }
 
     public CommonTextEditor(@Nullable String title, @Nullable String fileType, @Nullable String defaultContent) {
-        super(true); // use current window as parent
+        // use current window as parent
+        super(true);
         String _title = StringUtils.isBlank(title) ? "CommonTextEditor" : title;
         String _content = defaultContent == null ? "" : defaultContent;
         String _fileType = fileType == null ? "" : fileType;

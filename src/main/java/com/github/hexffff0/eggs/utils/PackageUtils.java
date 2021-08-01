@@ -4,6 +4,7 @@ package com.github.hexffff0.eggs.utils;
 import com.intellij.ide.IdeBundle;
 import com.intellij.ide.util.DirectoryChooserUtil;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -14,17 +15,19 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.ActionRunner;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.Query;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.IOException;
 
-public class PackageUtil {
-    private static final Logger LOG = Logger.getInstance(PackageUtil.class);
+/**
+ * @author hyc
+ */
+public class PackageUtils {
+
+    private static final Logger LOG = Logger.getInstance(PackageUtils.class);
 
     @Nullable
     public static PsiDirectory findOrCreateDirectoryForPackage(@NotNull Project project,
@@ -57,7 +60,9 @@ public class PackageUtil {
                 PsiDirectory[] moduleDirectories = getPackageDirectoriesInModule(rootPackage, module);
                 PsiDirectory initDir = findDirectory(moduleDirectories, baseDir);
                 psiDirectory = DirectoryChooserUtil.selectDirectory(project, moduleDirectories, initDir, postfixToShow);
-                if (psiDirectory == null) return null;
+                if (psiDirectory == null) {
+                    return null;
+                }
             }
         }
 
@@ -66,7 +71,9 @@ public class PackageUtil {
             PsiDirectory initDir = findDirectory(sourceDirectories, baseDir);
             psiDirectory = DirectoryChooserUtil.selectDirectory(project, sourceDirectories, initDir,
                 File.separatorChar + packageName.replace('.', File.separatorChar));
-            if (psiDirectory == null) return null;
+            if (psiDirectory == null) {
+                return null;
+            }
         }
 
         String restOfName = packageName;
@@ -90,19 +97,11 @@ public class PackageUtil {
 
                 final PsiDirectory psiDirectory1 = psiDirectory;
                 try {
-                    psiDirectory = ActionRunner.runInsideWriteAction(new ActionRunner.InterruptibleRunnableWithResult<PsiDirectory>() {
-                        public PsiDirectory run() throws Exception {
-                            return psiDirectory1.createSubdirectory(name);
-                        }
-                    });
+                    psiDirectory = WriteAction.compute(() -> psiDirectory1.createSubdirectory(name));
                 }
                 catch (IncorrectOperationException e) {
                     throw e;
-                }
-                catch (IOException e) {
-                    throw new IncorrectOperationException(e);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     LOG.error(e);
                 }
             }
@@ -123,7 +122,9 @@ public class PackageUtil {
         String nameToMatch = packageName;
         while (true) {
             PsiPackage aPackage = JavaPsiFacade.getInstance(manager.getProject()).findPackage(nameToMatch);
-            if (aPackage != null && isWritablePackage(aPackage)) return aPackage;
+            if (aPackage != null && isWritablePackage(aPackage)) {
+                return aPackage;
+            }
             int lastDotIndex = nameToMatch.lastIndexOf('.');
             if (lastDotIndex >= 0) {
                 nameToMatch = nameToMatch.substring(0, lastDotIndex);
@@ -146,7 +147,9 @@ public class PackageUtil {
 
     private static PsiDirectory getWritableModuleDirectory(@NotNull Query<VirtualFile> vFiles, @NotNull Module module, PsiManager manager) {
         for (VirtualFile vFile : vFiles) {
-            if (ModuleUtil.findModuleForFile(vFile, module.getProject()) != module) continue;
+            if (ModuleUtil.findModuleForFile(vFile, module.getProject()) != module) {
+                continue;
+            }
             PsiDirectory directory = manager.findDirectory(vFile);
             if (directory != null && directory.isValid() && directory.isWritable()) {
                 return directory;
@@ -166,7 +169,9 @@ public class PackageUtil {
         while (true) {
             Query<VirtualFile> vFiles = ModulePackageIndex.getInstance(module).getDirsByPackageName(nameToMatch, false);
             PsiDirectory directory = getWritableModuleDirectory(vFiles, module, manager);
-            if (directory != null) return JavaDirectoryService.getInstance().getPackage(directory);
+            if (directory != null) {
+                return JavaDirectoryService.getInstance().getPackage(directory);
+            }
 
             int lastDotIndex = nameToMatch.lastIndexOf('.');
             if (lastDotIndex >= 0) {

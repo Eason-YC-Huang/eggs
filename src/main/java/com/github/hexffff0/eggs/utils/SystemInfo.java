@@ -1,5 +1,8 @@
 package com.github.hexffff0.eggs.utils;
 
+/**
+ * @author hyc
+ */
 public class SystemInfo {
 
     public static final String CLASS_PATH_DELIMITER;

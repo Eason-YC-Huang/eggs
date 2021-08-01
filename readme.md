@@ -2,13 +2,28 @@
 
 Eggs is an Intellij IDEA plugin that allows you to write Java code to interact with IDEA.
 
+# Todo
+
+```
+v1.0.5
+default execute unit
+- generate getter & setter
+- generate SerialVersionUID
+- pojo class -> json
+- json -> pojo class
+```
+
+
+
+
+
 # Usage
 
 ## Write execute unit
 
 **Write your code in the EggsSettings panel，the MainClass must contain method  `void main(Map<String,Object>)context`**
 
-![image-20210203142929543](./doc/images/Eggs-usage.gif)
+![image-20210203142929543](-./doc/images/Eggs-usage.gif)
 
 ```java
 package com.github.hexffff0.incubator.codeutils.copymethod;

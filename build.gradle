@@ -24,15 +24,15 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 intellij {
     plugins = ['java', 'maven']
 //     intellij.version and intellij.localPath should not be specified at the same time.
-     intellij.localPath '/Applications/IntelliJ IDEA.app'
-//    intellij.version '2020.2.2'
+//     intellij.localPath '/Applications/IntelliJ IDEA.app'
+    intellij.version '2021.2'
     updateSinceUntilBuild false
 
 }
