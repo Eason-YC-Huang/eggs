@@ -23,7 +23,7 @@ default execute unit
 
 **Write your code in the EggsSettings panel，the MainClass must contain method  `void main(Map<String,Object>)context`**
 
-![image-20210203142929543](-./doc/images/Eggs-usage.gif)
+![image-20210203142929543](./doc/images/Eggs-usage.gif)
 
 ```java
 package com.github.hexffff0.incubator.codeutils.copymethod;
@@ -68,7 +68,7 @@ Clone [Incubator](https://github.com/hexffff0/incubator) project，write your ex
 
 ## Jetbrains plugin market
 
-- 
+- https://plugins.jetbrains.com/plugin/16060-eggs
 
 ## Releases
 
